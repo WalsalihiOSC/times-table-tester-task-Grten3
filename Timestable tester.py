@@ -2,6 +2,7 @@
 import random
 from tkinter import *
 
+#GUI class that the user interacts with 
 class GUI:
     def __init__(self, parent):
 
@@ -14,6 +15,7 @@ class GUI:
         
         self.numbers_list = self.T1.timestable_randomizer()
 
+    
         self.question = Label(self.main,text = "{} * {}".format(self.numbers_list[0],self.numbers_list[1]))
         self.question.grid(column=0,row=0,sticky=E,pady=10)
         
@@ -27,6 +29,7 @@ class GUI:
         self.next = Button(self.main,text="Next", command= self.new_main)
         self.next.grid(column=1,row=1,sticky=E,pady=5,padx=10)
 
+#display if the user's answer is correct or incorrect
     def display(self):
         try:
             self.display_label.configure(text="")
@@ -36,7 +39,7 @@ class GUI:
         self.display_label=Label(text=self.T1.check_answer(self.user_entry.get()))
         self.display_label.grid(column=0,row=3,sticky=E,padx=10,pady=5)
 
-
+#resets everything and display a new question
     def new_main(self):
         
         self.numbers_list = self.T1.timestable_randomizer()
@@ -59,19 +62,19 @@ class GUI:
 
 
 
-
+#this class is to process and return the data sent over by the GUI class
 class Processing:
     def __init__(self, min = 0, max = 12):
         self.min = min
         self.max = max 
         
 
-        
+    #get 2 random numbers for the question
     def timestable_randomizer(self): 
         self.number = random.sample(range(self.min,self.max),2)
         return self.number
     
-
+    #check if user's answer is correct then return the result
     def check_answer(self,user_answer):
         self.user_answer = user_answer
         self.answer = self.number[0] * self.number[1]
@@ -96,7 +99,7 @@ class Processing:
 
 
     
-
+#main routine
 root = Tk()
 root.title("Times Table tester")
 GUI(root)
