@@ -78,8 +78,7 @@ class Processing:
     def check_answer(self,user_answer):
         self.user_answer = user_answer
         self.answer = self.number[0] * self.number[1]
-        print(self.answer)
-
+      
         try:
             user_answer = int(user_answer)
             if self.answer == user_answer:
