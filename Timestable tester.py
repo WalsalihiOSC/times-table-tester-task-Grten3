@@ -6,29 +6,52 @@ class GUI:
     def __init__(self, parent):
 
         
-        main = Frame(parent)
-        main.grid()
+        self.main = Frame(parent)
+        self.main.grid()
 
 
-        self.T1 = Times_Table()
-        numbers_list = self.T1.timestable_randomizer()
+        self.T1 = Processing()
         
-        Label(main,text = "{} * {}".format(numbers_list[0],numbers_list[1])).grid(column=0,row=0,sticky=E,pady=10)
+        self.numbers_list = self.T1.timestable_randomizer()
 
+        self.question = Label(self.main,text = "{} * {}".format(self.numbers_list[0],self.numbers_list[1]))
+        self.question.grid(column=0,row=0,sticky=E,pady=10)
         
-        self.user_entry = Entry(main)
+        
+        self.user_entry = Entry(self.main)
         self.user_entry.grid(column=1,row=0,sticky=W,pady=10,padx=5)
        
         
-        Button(main,text="Check Answer", command = self.display).grid(column=0,row=1,sticky=E,padx=10,pady=5)
+        Button(self.main,text="Check Answer", command = self.display).grid(column=0,row=1,sticky=E,padx=10,pady=5)
         
-        Button(main,text="Next").grid(column=1,row=1,sticky=E,pady=5,padx=10)
-       
+        self.next = Button(self.main,text="Next", command= self.new_main)
+        self.next.grid(column=1,row=1,sticky=E,pady=5,padx=10)
 
     def display(self):
-        Label(text=self.T1.check_answer(self.user_entry.get())).grid(column=0,row=3,sticky=E,padx=10,pady=5)
+        try:
+            self.display_label.configure(text="")
+            
+        except:
+            pass
+        self.display_label=Label(text=self.T1.check_answer(self.user_entry.get()))
+        self.display_label.grid(column=0,row=3,sticky=E,padx=10,pady=5)
 
-    
+
+    def new_main(self):
+        
+        self.numbers_list = self.T1.timestable_randomizer()
+        self.question.configure(text = "{} * {}".format(self.numbers_list[0],self.numbers_list[1]))
+
+        self.user_entry.delete(0, END)
+
+        try:
+            self.display_label.configure(text="")
+            
+        except:
+            pass
+       
+        
+        
         
         
          
@@ -37,8 +60,8 @@ class GUI:
 
 
 
-class Times_Table:
-    def __init__(self, min = 0, max = 20):
+class Processing:
+    def __init__(self, min = 0, max = 12):
         self.min = min
         self.max = max 
         
@@ -71,11 +94,8 @@ class Times_Table:
 
 
 
-    #def next(self):
-        
 
-
-
+    
 
 root = Tk()
 root.title("Times Table tester")
